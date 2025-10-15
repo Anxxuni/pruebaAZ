@@ -7,9 +7,9 @@ import { Estudiante } from '../models/estudiante.model';
 })
 export class EstudianteService {
   private estudiantes: Estudiante[] = [
-    { id: 1, nombre: 'Ana García', carrera: 'Ingeniería de Software', promedio: 9.2 },
+    { id: 1, nombre: 'Marco Montoya', carrera: 'Ingeniería de Software', promedio: 9.2 },
     { id: 2, nombre: 'Luis Pérez', carrera: 'Diseño Gráfico', promedio: 7.5 },
-    { id: 3, nombre: 'Marta Solano', carrera: 'Administración de Empresas', promedio: 8.8 },
+    { id: 3, nombre: 'Maria Solano', carrera: 'Administración de Empresas', promedio: 8.8 },
   ];
   private nextId = 4; // Para  IDs únicos
 
