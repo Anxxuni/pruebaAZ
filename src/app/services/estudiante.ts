@@ -11,7 +11,7 @@ export class EstudianteService {
     { id: 2, nombre: 'Luis Pérez', carrera: 'Diseño Gráfico', promedio: 7.5 },
     { id: 3, nombre: 'Marta Solano', carrera: 'Administración de Empresas', promedio: 8.8 },
   ];
-  private nextId = 4; // Para simular IDs únicos
+  private nextId = 4; // Para  IDs únicos
 
   constructor() { }
 
