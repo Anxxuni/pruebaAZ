@@ -35,7 +35,7 @@ export class FormEstudianteComponent implements OnInit {
     if (this.estudianteForm.valid) {
       // Omit<'id'> ya que el id lo asigna el servicio
       this.estudianteService.agregarEstudiante(this.estudianteForm.value);
-      this.router.navigate(['/estudiantes']); // Redirigir a la lista
+      this.router.navigate(['/estudiantes']); 
     }
   }
 }
