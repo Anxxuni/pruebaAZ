@@ -1,4 +1,3 @@
-// src/app/components/form-estudiante/form-estudiante.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -28,7 +27,6 @@ export class FormEstudianteComponent implements OnInit {
     });
   }
 
-  // Getter para un acceso más fácil en la plantilla
   get form() {
     return this.estudianteForm.controls;
   }
