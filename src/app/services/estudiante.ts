@@ -7,6 +7,7 @@ export interface Estudiante {
   carrera: string;
   promedio: number;
 }
+
 @Injectable({
   providedIn: 'root'
 })
