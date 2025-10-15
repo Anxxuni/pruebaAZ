@@ -1,0 +1,32 @@
+// src/app/services/estudiante.service.ts
+import { Injectable } from '@angular/core';
+import { Estudiante } from '../models/estudiante.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class EstudianteService {
+  private estudiantes: Estudiante[] = [
+    { id: 1, nombre: 'Ana García', carrera: 'Ingeniería de Software', promedio: 9.2 },
+    { id: 2, nombre: 'Luis Pérez', carrera: 'Diseño Gráfico', promedio: 7.5 },
+    { id: 3, nombre: 'Marta Solano', carrera: 'Administración de Empresas', promedio: 8.8 },
+  ];
+  private nextId = 4; // Para simular IDs únicos
+
+  constructor() { }
+
+  // Retorna la lista actual de estudiantes
+  getEstudiantes(): Estudiante[] {
+    return this.estudiantes;
+  }
+
+  // Agrega un nuevo estudiante a la lista
+  agregarEstudiante(nuevoEstudiante: Omit<Estudiante, 'id'>): void {
+    const estudianteConId: Estudiante = {
+      ...nuevoEstudiante,
+      id: this.nextId++
+    };
+    this.estudiantes.push(estudianteConId);
+    console.log('Estudiante agregado:', estudianteConId);
+  }
+}
