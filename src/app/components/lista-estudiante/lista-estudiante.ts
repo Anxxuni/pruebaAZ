@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EstudianteService } from '../../services/estudiante';
-import { Estudiante } from '../../models/estudiante.model';
+import { Estudiante, EstudianteService } from '../../services/estudiante';
 
 @Component({
   selector: 'app-lista-estudiantes',

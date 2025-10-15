@@ -1,7 +1,12 @@
 
 import { Injectable } from '@angular/core';
-import { Estudiante } from '../models/estudiante.model';
 
+export interface Estudiante {
+  id: number;
+  nombre: string;
+  carrera: string;
+  promedio: number;
+}
 @Injectable({
   providedIn: 'root'
 })
