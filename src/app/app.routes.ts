@@ -5,8 +5,8 @@ import { ListaEstudiantesComponent } from './components/lista-estudiante/lista-e
 
 export const routes: Routes = [
     
-{path: 'navbar',component: Navbar},
- { path: '', redirectTo: 'estudiantes', pathMatch: 'full' },
+  {path: 'navbar',component: Navbar},
+  { path: '', redirectTo: 'estudiantes', pathMatch: 'full' },
   { path: 'estudiantes', component: ListaEstudiantesComponent },
   { path: 'nuevo', component: FormEstudianteComponent },
   { path: '**', redirectTo: 'estudiantes' }
