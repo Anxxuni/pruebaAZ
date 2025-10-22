@@ -12,7 +12,7 @@ import { RouterLink } from '@angular/router';
   templateUrl: './lista-reserva.html',
 })
 export class ListaReservaComponent implements OnInit {
-  reservas$!: Observable<Reserva[]>; 
+ reservas$!: Observable<Reserva[]>; 
 
   constructor(private reservaService: ReservaService) {}
 

@@ -9,7 +9,7 @@
 
     <div *ngIf="f['cliente'].invalid && (f['cliente'].dirty || f['cliente'].touched)" class="invalid-feedback">
       <div *ngIf="f['cliente'].errors?.['required']">El nombre del cliente es obligatorio.</div>
-      <div *ngIf="f['cliente'].errors?.['minlength']">Debe tener al menos 3 caracteres.</div>
+      <div *ngIf="f['cliente'].errors?.['minlength']">Mínimo 3 caracteres.</div>
     </div>
   </div>
 
@@ -30,12 +30,8 @@
   <div formGroupName="fechas" class="row g-3">
     <div class="col-md-6">
       <label for="fechaEntrada" class="form-label">Fecha de Entrada</label>
-      <input 
-        type="date" 
-        class="form-control" 
-        id="fechaEntrada" 
-        formControlName="fechaEntrada"
-        [class.is-invalid]="fechasGroup.get('fechaEntrada')?.invalid && (fechasGroup.get('fechaEntrada')?.dirty || fechasGroup.get('fechaEntrada')?.touched) || fechasGroup.errors?.['fechaInvalida']">
+      <input type="date" class="form-control" id="fechaEntrada" formControlName="fechaEntrada"
+             [class.is-invalid]="fechasGroup.get('fechaEntrada')?.invalid && (fechasGroup.get('fechaEntrada')?.dirty || fechasGroup.get('fechaEntrada')?.touched) || fechasGroup.errors?.['fechaInvalida']">
 
       <div *ngIf="fechasGroup.get('fechaEntrada')?.errors?.['required'] && (fechasGroup.get('fechaEntrada')?.dirty || fechasGroup.get('fechaEntrada')?.touched)" class="invalid-feedback">
         La fecha de entrada es obligatoria.
@@ -43,12 +39,8 @@
     </div>
     <div class="col-md-6">
       <label for="fechaSalida" class="form-label">Fecha de Salida</label>
-      <input 
-        type="date" 
-        class="form-control" 
-        id="fechaSalida" 
-        formControlName="fechaSalida"
-        [class.is-invalid]="fechasGroup.get('fechaSalida')?.invalid && (fechasGroup.get('fechaSalida')?.dirty || fechasGroup.get('fechaSalida')?.touched) || fechasGroup.errors?.['fechaInvalida']">
+      <input type="date" class="form-control" id="fechaSalida" formControlName="fechaSalida"
+             [class.is-invalid]="fechasGroup.get('fechaSalida')?.invalid && (fechasGroup.get('fechaSalida')?.dirty || fechasGroup.get('fechaSalida')?.touched) || fechasGroup.errors?.['fechaInvalida']">
 
       <div *ngIf="fechasGroup.get('fechaSalida')?.errors?.['required'] && (fechasGroup.get('fechaSalida')?.dirty || fechasGroup.get('fechaSalida')?.touched)" class="invalid-feedback">
         La fecha de salida es obligatoria.
