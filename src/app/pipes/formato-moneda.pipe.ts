@@ -13,13 +13,13 @@ import { Pipe, PipeTransform } from '@angular/core';
       return '$0,00';
     }
     
-    // 1. Convertir a string con dos decimales
+    // Se convierte a string con dos decimales
     let s = value.toFixed(2);
     
-    // 2. Reemplazar punto por coma
+    // Se reemplaza punto por coma
     s = s.replace('.', ',');
     
-    // 3. Devolver con símbolo
+    // Se devuelve con símbolo
     return '$' + s;
   }
 }
