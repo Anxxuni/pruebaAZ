@@ -16,7 +16,7 @@ export interface Reserva {
   providedIn: 'root'
 })
 export class ReservaService {
-// Datos iniciales simulados
+
   private reservasIniciales: Reserva[] = [
     { id: 1, cliente: 'Marco Montoya', habitacion: 101, fechaEntrada: new Date(2025, 10, 15), fechaSalida: new Date(2025, 10, 20), total: 450.75 },
     { id: 2, cliente: 'Luis Pérez', habitacion: 203, fechaEntrada: new Date(2025, 11, 1), fechaSalida: new Date(2025, 11, 5), total: 325.00 },
@@ -38,6 +38,6 @@ export class ReservaService {
 
     const reservaCompleta: Reserva = { ...nuevaReserva, id: newId };
     
-    this._reservas$.next([...currentReservas, reservaCompleta]); // Emitir nueva lista
+    this._reservas$.next([...currentReservas, reservaCompleta]); 
   }
 }
