@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
   standalone: true 
 })export class FormatoMonedaPipe implements PipeTransform {
   /**
-   * Transforma un valor numérico a formato de moneda (ej: 125.5 a $125,50).
+   * Transforma un valor numérico a formato de moneda.
    */
   transform(value: number | null): string {
     if (value === null || isNaN(value)) {
