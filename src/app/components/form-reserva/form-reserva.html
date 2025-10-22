@@ -2,79 +2,93 @@
 
 <form [formGroup]="reservaForm" (ngSubmit)="onSubmit()" class="row g-3 p-4 border rounded shadow-sm">
 
-  <div class="col-md-6">
-    <label for="cliente" class="form-label">Cliente</label>
-    <input type="text" class="form-control" id="cliente" formControlName="cliente"
-           [class.is-invalid]="f['cliente'].invalid && (f['cliente'].dirty || f['cliente'].touched)">
-
-    <div *ngIf="f['cliente'].invalid && (f['cliente'].dirty || f['cliente'].touched)" class="invalid-feedback">
-      <div *ngIf="f['cliente'].errors?.['required']">El nombre del cliente es obligatorio.</div>
-      <div *ngIf="f['cliente'].errors?.['minlength']">Mínimo 3 caracteres.</div>
-    </div>
-  </div>
-
-  <div class="col-md-6">
-    <label for="habitacion" class="form-label">Habitación</label>
-    <select class="form-select" id="habitacion" formControlName="habitacion"
-           [class.is-invalid]="f['habitacion'].invalid && (f['habitacion'].dirty || f['habitacion'].touched)">
-      <option value="" disabled>Seleccione una habitación</option>
-      <option value="101">101 - Simple</option>
-      <option value="203">203 - Doble</option>
-      <option value="305">305 - Suite</option>
-    </select>
-    <div *ngIf="f['habitacion'].errors?.['required'] && (f['habitacion'].dirty || f['habitacion'].touched)" class="invalid-feedback">
-      La habitación es obligatoria.
-    </div>
-  </div>
-
-  <div formGroupName="fechas" class="row g-3">
     <div class="col-md-6">
-      <label for="fechaEntrada" class="form-label">Fecha de Entrada</label>
-      <input type="date" class="form-control" id="fechaEntrada" formControlName="fechaEntrada"
-             [class.is-invalid]="fechasGroup.get('fechaEntrada')?.invalid && (fechasGroup.get('fechaEntrada')?.dirty || fechasGroup.get('fechaEntrada')?.touched) || fechasGroup.errors?.['fechaInvalida']">
+        <label for="cliente" class="form-label">Cliente</label>
+        <input type="text" class="form-control" id="cliente" formControlName="cliente"
+            [class.is-invalid]="f['cliente'].invalid && (f['cliente'].dirty || f['cliente'].touched)">
 
-      <div *ngIf="fechasGroup.get('fechaEntrada')?.errors?.['required'] && (fechasGroup.get('fechaEntrada')?.dirty || fechasGroup.get('fechaEntrada')?.touched)" class="invalid-feedback">
-        La fecha de entrada es obligatoria.
-      </div>
-    </div>
-    <div class="col-md-6">
-      <label for="fechaSalida" class="form-label">Fecha de Salida</label>
-      <input type="date" class="form-control" id="fechaSalida" formControlName="fechaSalida"
-             [class.is-invalid]="fechasGroup.get('fechaSalida')?.invalid && (fechasGroup.get('fechaSalida')?.dirty || fechasGroup.get('fechaSalida')?.touched) || fechasGroup.errors?.['fechaInvalida']">
-
-      <div *ngIf="fechasGroup.get('fechaSalida')?.errors?.['required'] && (fechasGroup.get('fechaSalida')?.dirty || fechasGroup.get('fechaSalida')?.touched)" class="invalid-feedback">
-        La fecha de salida es obligatoria.
-      </div>
-    </div>
-
-    <div *ngIf="fechasGroup.errors?.['fechaInvalida'] && (fechasGroup.dirty || fechasGroup.touched)" class="col-12">
-        <div class="alert alert-danger p-2 small">
-          La Fecha de Salida debe ser posterior a la Entrada.
+        <div *ngIf="f['cliente'].invalid && (f['cliente'].dirty || f['cliente'].touched)" class="invalid-feedback">
+            <div *ngIf="f['cliente'].errors?.['required']">El nombre del cliente es obligatorio.</div>
+            <div *ngIf="f['cliente'].errors?.['minlength']">Mínimo 3 caracteres.</div>
         </div>
     </div>
-  </div>
 
-  <div class="col-md-6">
-    <label for="total" class="form-label">Total de la Reserva ($)</label>
-    <input type="number" step="0.01" class="form-control" id="total" formControlName="total"
-           [class.is-invalid]="f['total'].invalid && (f['total'].dirty || f['total'].touched)">
-
-    <div *ngIf="f['total'].invalid && (f['total'].dirty || f['total'].touched)" class="invalid-feedback">
-      <div *ngIf="f['total'].errors?.['required']">El total es obligatorio.</div>
-      <div *ngIf="f['total'].errors?.['min']">El total debe ser mayor a $0.00.</div>
+    <div class="col-md-6">
+        <label for="habitacion" class="form-label">Habitación</label>
+        <select class="form-select" id="habitacion" formControlName="habitacion"
+            [class.is-invalid]="f['habitacion'].invalid && (f['habitacion'].dirty || f['habitacion'].touched)">
+            <option value="" disabled>Seleccione una habitación</option>
+            <option value="101">101 - Simple</option>
+            <option value="203">203 - Doble</option>
+            <option value="305">305 - Suite</option>
+        </select>
+        <div *ngIf="f['habitacion'].errors?.['required'] && (f['habitacion'].dirty || f['habitacion'].touched)"
+            class="invalid-feedback">
+            La habitación es obligatoria.
+        </div>
     </div>
-  </div>
 
-  <div class="col-12 mt-4 d-flex gap-2">
-    <button type="submit" class="btn btn-primary" [disabled]="reservaForm.invalid">
-      <i class="bi bi-save me-2"></i> Guardar Reserva
-    </button>
-    <a routerLink="/reservas" class="btn btn-secondary">
-      <i class="bi bi-x-circle me-2"></i> Cancelar
-    </a>
-  </div>
-  
-  <div *ngIf="reservaForm.invalid && reservaForm.touched" class="alert alert-danger mt-3">
-    Por favor, corrige los errores del formulario antes de continuar.
-  </div>
+    <div formGroupName="fechas" class="col-12">
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label for="fechaEntrada" class="form-label">Fecha de Entrada</label>
+                <input type="date" class="form-control" id="fechaEntrada" formControlName="fechaEntrada"
+                    [min]="minDate"
+                    [class.is-invalid]="(fechasGroup.get('fechaEntrada')?.invalid && (fechasGroup.get('fechaEntrada')?.dirty || fechasGroup.get('fechaEntrada')?.touched)) || fechasGroup.errors?.['fechaInvalida'] || fechasGroup.errors?.['fechaPasada']">
+                
+                <div *ngIf="fechasGroup.get('fechaEntrada')?.errors?.['required'] && (fechasGroup.get('fechaEntrada')?.dirty || fechasGroup.get('fechaEntrada')?.touched)"
+                    class="invalid-feedback">
+                    La fecha de entrada es obligatoria.
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <label for="fechaSalida" class="form-label">Fecha de Salida</label>
+                <input type="date" class="form-control" id="fechaSalida" formControlName="fechaSalida"
+                    [class.is-invalid]="fechasGroup.get('fechaSalida')?.invalid && (fechasGroup.get('fechaSalida')?.dirty || fechasGroup.get('fechaSalida')?.touched) || fechasGroup.errors?.['fechaInvalida'] || fechasGroup.errors?.['fechaPasada']">
+                
+                <div *ngIf="fechasGroup.get('fechaSalida')?.errors?.['required'] && (fechasGroup.get('fechaSalida')?.dirty || fechasGroup.get('fechaSalida')?.touched)"
+                    class="invalid-feedback">
+                    La fecha de salida es obligatoria.
+                </div>
+            </div>
+
+            <div *ngIf="fechasGroup.errors?.['fechaPasada'] && (fechasGroup.dirty || fechasGroup.touched)"
+                class="col-12 mt-3">
+                <div class="alert alert-danger p-2 small">
+                    <i class="bi bi-calendar-x me-2"></i> La **Fecha de Entrada** no puede ser anterior al día de hoy.
+                </div>
+            </div>
+
+            <div *ngIf="fechasGroup.errors?.['fechaInvalida'] && (fechasGroup.dirty || fechasGroup.touched)" class="col-12">
+                <div class="alert alert-danger p-2 small">
+                    <i class="bi bi-exclamation-triangle me-2"></i> La **Fecha de Salida** debe ser posterior a la Entrada.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <label for="total" class="form-label">Total de la Reserva ($)</label>
+        <input type="number" step="0.01" class="form-control" id="total" formControlName="total"
+            [class.is-invalid]="f['total'].invalid && (f['total'].dirty || f['total'].touched)">
+
+        <div *ngIf="f['total'].invalid && (f['total'].dirty || f['total'].touched)" class="invalid-feedback">
+            <div *ngIf="f['total'].errors?.['required']">El total es obligatorio.</div>
+            <div *ngIf="f['total'].errors?.['min']">El total debe ser mayor a $0.00.</div>
+        </div>
+    </div>
+
+    <div class="col-12 mt-4 d-flex gap-2">
+        <button type="submit" class="btn btn-primary" [disabled]="reservaForm.invalid">
+            <i class="bi bi-save me-2"></i> Guardar Reserva
+        </button>
+        <a routerLink="/reservas" class="btn btn-secondary">
+            <i class="bi bi-x-circle me-2"></i> Cancelar
+        </a>
+    </div>
+
+    <div *ngIf="reservaForm.invalid && reservaForm.touched" class="alert alert-danger mt-3">
+        Por favor, corrige los errores del formulario antes de continuar.
+    </div>
 </form>

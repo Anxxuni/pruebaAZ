@@ -7,37 +7,36 @@ import { Reserva, ReservaService } from '../../services/reserva';
 @Component({
   selector: 'app-form-reserva',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink], 
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './form-reserva.html',
 })
 export class FormReservaComponent implements OnInit {
-  reservaForm!: FormGroup; 
+  reservaForm!: FormGroup;
+  minDate: string = ''; // Propiedad para la fecha mínima en el HTML
 
   constructor(
     private fb: FormBuilder,
-    private reservaService: ReservaService, 
+    private reservaService: ReservaService,
     private router: Router
-  ) {}
+  ) {
+    // Inicializa minDate con la fecha de hoy en formato YYYY-MM-DD
+    const today = new Date();
+    this.minDate = today.toISOString().split('T')[0];
+  }
 
   ngOnInit(): void {
     this.reservaForm = this.fb.group({
-      // Cliente: requerido, mínimo 3 caracteres
-      cliente: ['', [Validators.required, Validators.minLength(3)]], 
-      
-      // Habitación: requerida
-      habitacion: ['', Validators.required], 
-
-      // Grupo de Fechas: Aplicación de validación cruzada
+      cliente: ['', [Validators.required, Validators.minLength(3)]],
+      habitacion: ['', Validators.required],
       fechas: this.fb.group({
         fechaEntrada: ['', [Validators.required]],
         fechaSalida: ['', [Validators.required]],
-      }, { validators: dateValidator() }), // <-- ¡Validación cruzada aquí!
+      }, { validators: dateValidator() }), 
 
-      // Total: requerido, mayor a 0, con patrón para decimales
       total: [
-        null, 
+        null,
         [Validators.required, Validators.min(0.01), Validators.pattern(/^\d+(\.\d{1,2})?$/)]
-      ], 
+      ],
     });
   }
 
@@ -45,8 +44,8 @@ export class FormReservaComponent implements OnInit {
   get f() {
     return this.reservaForm.controls;
   }
-  
-  // Getter para el grupo de fechas (necesario para mostrar su error cruzado)
+
+  // Getter para el grupo de fechas 
   get fechasGroup() {
     return this.reservaForm.get('fechas') as FormGroup;
   }
@@ -61,32 +60,46 @@ export class FormReservaComponent implements OnInit {
 
     const nuevaReserva: Omit<Reserva, 'id'> = {
       cliente: formValue.cliente,
-      habitacion: Number(formValue.habitacion), 
+      habitacion: Number(formValue.habitacion),
       fechaEntrada: new Date(formValue.fechas.fechaEntrada),
       fechaSalida: new Date(formValue.fechas.fechaSalida),
       total: Number(formValue.total),
     };
 
     this.reservaService.addReserva(nuevaReserva);
-    this.router.navigate(['/reservas']); 
+    this.router.navigate(['/reservas']);
   }
 }
 
 function dateValidator(): ValidatorFn {
   return (group: AbstractControl): ValidationErrors | null => {
-    const fechaEntrada = group.get('fechaEntrada')?.value;
-    const fechaSalida = group.get('fechaSalida')?.value;
+    const fechaEntradaControl = group.get('fechaEntrada');
+    const fechaSalidaControl = group.get('fechaSalida');
+
+    const fechaEntrada = fechaEntradaControl?.value;
+    const fechaSalida = fechaSalidaControl?.value;
 
     if (!fechaEntrada || !fechaSalida) {
-      return null; 
+      return null;
     }
+    const partesEntrada = fechaEntrada.split('-').map(Number);
+    const entrada = new Date(partesEntrada[0], partesEntrada[1] - 1, partesEntrada[2]);
 
-    const entrada = new Date(fechaEntrada);
-    const salida = new Date(fechaSalida);
+    const partesSalida = fechaSalida.split('-').map(Number);
+    const salida = new Date(partesSalida[0], partesSalida[1] - 1, partesSalida[2]);
 
     if (salida.getTime() <= entrada.getTime()) {
-      return { 'fechaInvalida': true }; // Error de validación cruzada
+      return { 'fechaInvalida': true }; 
     }
+
+    const today = new Date();
+
+    const localToday = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+    if (entrada.getTime() < localToday.getTime()) {
+      return { 'fechaPasada': true }; 
+    }
+
     return null;
   };
 }
